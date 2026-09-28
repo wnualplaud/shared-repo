@@ -5,6 +5,12 @@ __pycache__/
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
+.hypothesis/
+.pytype/
+.pyre/
+.tox/
+.nox/
 .coverage
+.coverage.*
 htmlcov/
 .DS_Store
