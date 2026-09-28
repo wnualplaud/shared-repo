@@ -33,6 +33,6 @@ ENDPOINTS = [
         "method": "POST",
         "path": "/statement",
         "query": "modules/statement/query.sql",
-        "backend": "athena",
+        "backend": "mock",
     },
 ]

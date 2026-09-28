@@ -40,9 +40,9 @@ registered functions as the namespace dictionary passed to
 | S3-5 | Exercise the default, selective-override, combined-override, and custom-handle paths | Complete |
 | S3-6 | Record the final smoke matrix and close the core proof | Complete |
 
-The proof uses diagnostic methods only. It does not read SQL files,
-bind request parameters, call real connectors, implement an auth policy,
-or define production response and error mapping.
+The current implementation reads SQL files, binds request parameters, and
+provides Athena, DynamoDB, and local mock connectors. Authentication policy
+and production response and error mapping remain outside this proof.
 
 ## Smoke Matrix
 
@@ -52,7 +52,7 @@ the diagnostic handler methods yet.
 
 | Route | Proven behavior |
 |---|---|
-| `POST /statement` | Empty builder; inherited query, execution, and mapping |
+| `POST /statement` | Empty builder; inherited query, mock execution, and mapping |
 | `POST /account/list` | Inherited query/execution and decorated mapping |
 | `POST /account` | Decorated query and inherited execution/mapping |
 | `POST /transaction` | Decorated query and mapping with inherited execution |
@@ -65,8 +65,20 @@ python3 solutions/solution3-decorator-registry/test_local.py \
   POST /statement --body '{"query":"test"}'
 ```
 
-```text
-{'statusCode': 200, 'body': '{"context":"EndpointHandlerTemplate.build_mapping","query_result":{"context":"EndpointHandlerTemplate.execute_query","query":"modules/statement/query.sql"}}', 'isBase64Encoded': False, 'multiValueHeaders': defaultdict(<class 'list'>, {'Content-Type': ['application/json']})}
+The route uses `connectors/mock.py`, so this command needs no AWS credentials.
+Edit `MOCK_RESULT` in that file to control the hardcoded connector result.
+
+```json
+{
+  "items": [
+    {
+      "account_id": "mock-account-001",
+      "account_name": "Example Account",
+      "balance": 1250.5,
+      "currency": "THB"
+    }
+  ]
+}
 ```
 
 ### Mapping Override
