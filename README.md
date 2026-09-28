@@ -12,9 +12,12 @@ The implementations compare three endpoint behavior-binding mechanisms:
 3. `solution3-decorator-registry`: decorated functions are registered and
    bound to a generated handler subclass.
 
-These are local design proofs. Their Athena and DynamoDB connectors return
-stub data; they do not access AWS accounts, credentials, databases, or real
-customer data.
+Solutions 1 and 2 are local design proofs whose Athena and DynamoDB
+connectors return stub data. Solution 3 has real connectors that call
+Athena and DynamoDB (PartiQL) through boto3; running it needs AWS
+credentials from the default boto3 chain and the resources described in
+its README. No credentials, account identifiers, or real customer data are
+stored in this repository.
 
 ## Setup
 

@@ -4,17 +4,9 @@ from endpoint_handler_builder import EndpointHandlerBuilder
 handler_builder = EndpointHandlerBuilder()
 
 
-@handler_builder.override("build_query")
-def build_transaction_query(handler):
-    return {
-        "context": f"{type(handler).__name__}.build_query",
-        "query": handler.endpoint_config["query"],
-    }
+@handler_builder.override("bind_parameters")
+def bind_parameters_transaction(handler) -> list:
+    body = handler.request.json_body or {}
 
-
-@handler_builder.override("build_mapping")
-def build_transaction_mapping(handler, query_result):
-    return {
-        "context": f"{type(handler).__name__}.build_mapping",
-        "query_result": query_result,
-    }
+    account_id = body.get("account_id")
+    return [account_id]
