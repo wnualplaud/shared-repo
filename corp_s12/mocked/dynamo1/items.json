@@ -1,0 +1,226 @@
+{
+ "rdxuat_tbl1": [
+  {
+   "PutRequest": {
+    "Item": {
+     "citizenId": {
+      "S": "1100000000001"
+     },
+     "accountKey": {
+      "S": "SAVINGS#1000000001"
+     },
+     "accountId": {
+      "S": "1000000001"
+     },
+     "accountSubType": {
+      "S": "SAVINGS"
+     },
+     "institutionName": {
+      "S": "MOCK BANK"
+     },
+     "accountStatus": {
+      "S": "ACTIVE"
+     },
+     "accountName": {
+      "S": "นายทดสอบ หนึ่ง"
+     },
+     "ownerType": {
+      "S": "INDIVIDUAL"
+     },
+     "accountOwner": {
+      "S": "นายทดสอบ หนึ่ง"
+     },
+     "accountNameEn": {
+      "S": "Mr Test One"
+     },
+     "src_stm_id": {
+      "S": "MOCK"
+     },
+     "load_ts": {
+      "S": "2026-10-08T00:00:00"
+     },
+     "data_dt": {
+      "S": "2026-10-08"
+     }
+    }
+   }
+  },
+  {
+   "PutRequest": {
+    "Item": {
+     "citizenId": {
+      "S": "1100000000001"
+     },
+     "accountKey": {
+      "S": "SAVINGS#1000000002"
+     },
+     "accountId": {
+      "S": "1000000002"
+     },
+     "accountSubType": {
+      "S": "SAVINGS"
+     },
+     "institutionName": {
+      "S": "MOCK BANK"
+     },
+     "accountStatus": {
+      "S": "ACTIVE"
+     },
+     "accountName": {
+      "S": "บัญชีออมทรัพย์ ไม่มีชื่ออังกฤษ"
+     },
+     "ownerType": {
+      "S": "INDIVIDUAL"
+     },
+     "accountOwner": {
+      "S": "นายทดสอบ หนึ่ง"
+     },
+     "src_stm_id": {
+      "S": "MOCK"
+     },
+     "load_ts": {
+      "S": "2026-10-08T00:00:00"
+     },
+     "data_dt": {
+      "S": "2026-10-08"
+     }
+    }
+   }
+  },
+  {
+   "PutRequest": {
+    "Item": {
+     "citizenId": {
+      "S": "1100000000001"
+     },
+     "accountKey": {
+      "S": "CURRENT#2000000001"
+     },
+     "accountId": {
+      "S": "2000000001"
+     },
+     "accountSubType": {
+      "S": "CURRENT"
+     },
+     "institutionName": {
+      "S": "MOCK BANK"
+     },
+     "accountStatus": {
+      "S": "ACTIVE"
+     },
+     "accountName": {
+      "S": "บัญชีกระแสรายวัน"
+     },
+     "ownerType": {
+      "S": "INDIVIDUAL"
+     },
+     "accountOwner": {
+      "S": "นายทดสอบ หนึ่ง"
+     },
+     "accountNameEn": {
+      "S": "Current Account"
+     },
+     "src_stm_id": {
+      "S": "MOCK"
+     },
+     "load_ts": {
+      "S": "2026-10-08T00:00:00"
+     },
+     "data_dt": {
+      "S": "2026-10-08"
+     }
+    }
+   }
+  },
+  {
+   "PutRequest": {
+    "Item": {
+     "citizenId": {
+      "S": "1100000000001"
+     },
+     "accountKey": {
+      "S": "TERM#3000000001"
+     },
+     "accountId": {
+      "S": "3000000001"
+     },
+     "accountSubType": {
+      "S": "TERM"
+     },
+     "institutionName": {
+      "S": "MOCK BANK"
+     },
+     "accountStatus": {
+      "S": "ACTIVE"
+     },
+     "accountName": {
+      "S": "บัญชีฝากประจำ"
+     },
+     "ownerType": {
+      "S": "INDIVIDUAL"
+     },
+     "accountOwner": {
+      "S": "นายทดสอบ หนึ่ง"
+     },
+     "accountNameEn": {
+      "S": "Term Deposit"
+     },
+     "src_stm_id": {
+      "S": "MOCK"
+     },
+     "load_ts": {
+      "S": "2026-10-08T00:00:00"
+     },
+     "data_dt": {
+      "S": "2026-10-08"
+     }
+    }
+   }
+  },
+  {
+   "PutRequest": {
+    "Item": {
+     "citizenId": {
+      "S": "1100000000002"
+     },
+     "accountKey": {
+      "S": "SAVINGS#1000000003"
+     },
+     "accountId": {
+      "S": "1000000003"
+     },
+     "accountSubType": {
+      "S": "SAVINGS"
+     },
+     "institutionName": {
+      "S": "MOCK BANK"
+     },
+     "accountStatus": {
+      "S": "ACTIVE"
+     },
+     "accountName": {
+      "S": "นางทดสอบ สอง"
+     },
+     "ownerType": {
+      "S": "INDIVIDUAL"
+     },
+     "accountOwner": {
+      "S": "นางทดสอบ สอง"
+     },
+     "accountNameEn": {
+      "S": "Mrs Test Two"
+     },
+     "src_stm_id": {
+      "S": "MOCK"
+     },
+     "load_ts": {
+      "S": "2026-10-08T00:00:00"
+     },
+     "data_dt": {
+      "S": "2026-10-08"
+     }
+    }
+   }
+  }
+ ]
+}

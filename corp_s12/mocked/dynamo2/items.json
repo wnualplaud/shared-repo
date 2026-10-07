@@ -1,0 +1,298 @@
+{
+ "rdxuat_tbl2": [
+  {
+   "PutRequest": {
+    "Item": {
+     "accountId": {
+      "S": "1000000001"
+     },
+     "accountSubType": {
+      "S": "SAVINGS"
+     },
+     "institutionName": {
+      "S": "MOCK BANK"
+     },
+     "ownerType": {
+      "S": "INDIVIDUAL"
+     },
+     "accountType": {
+      "S": "DEPOSIT"
+     },
+     "accountStatus": {
+      "S": "ACTIVE"
+     },
+     "accountName": {
+      "S": "นายทดสอบ หนึ่ง"
+     },
+     "accountOwner": {
+      "S": "นายทดสอบ หนึ่ง"
+     },
+     "accountNameEn": {
+      "S": "Mr Test One"
+     },
+     "openingDate": {
+      "S": "2020-01-15T00:00:00"
+     },
+     "homeBranch": {
+      "S": "สาขาสีลม"
+     },
+     "homeBranchEn": {
+      "S": "Silom Branch"
+     },
+     "lastLedgerBalanceAmount": {
+      "N": "15000.50"
+     },
+     "lastLedgerBalanceCurrency": {
+      "S": "THB"
+     },
+     "lastAvailableBalanceAmount": {
+      "N": "14800.50"
+     },
+     "lastAvailableBalanceCurrency": {
+      "S": "THB"
+     },
+     "src_stm_id": {
+      "S": "MOCK"
+     },
+     "load_ts": {
+      "S": "2026-10-08T00:00:00"
+     },
+     "data_dt": {
+      "S": "2026-10-08"
+     }
+    }
+   }
+  },
+  {
+   "PutRequest": {
+    "Item": {
+     "accountId": {
+      "S": "1000000002"
+     },
+     "accountSubType": {
+      "S": "SAVINGS"
+     },
+     "institutionName": {
+      "S": "MOCK BANK"
+     },
+     "ownerType": {
+      "S": "INDIVIDUAL"
+     },
+     "accountType": {
+      "S": "DEPOSIT"
+     },
+     "accountStatus": {
+      "S": "ACTIVE"
+     },
+     "accountName": {
+      "S": "บัญชีออมทรัพย์ ไม่มีชื่ออังกฤษ"
+     },
+     "accountOwner": {
+      "S": "นายทดสอบ หนึ่ง"
+     },
+     "openingDate": {
+      "S": "2022-06-01T00:00:00"
+     },
+     "homeBranch": {
+      "S": "สาขาบางนา"
+     },
+     "lastLedgerBalanceAmount": {
+      "N": "0"
+     },
+     "lastLedgerBalanceCurrency": {
+      "S": "THB"
+     },
+     "src_stm_id": {
+      "S": "MOCK"
+     },
+     "load_ts": {
+      "S": "2026-10-08T00:00:00"
+     },
+     "data_dt": {
+      "S": "2026-10-08"
+     }
+    }
+   }
+  },
+  {
+   "PutRequest": {
+    "Item": {
+     "accountId": {
+      "S": "2000000001"
+     },
+     "accountSubType": {
+      "S": "CURRENT"
+     },
+     "institutionName": {
+      "S": "MOCK BANK"
+     },
+     "ownerType": {
+      "S": "INDIVIDUAL"
+     },
+     "accountType": {
+      "S": "DEPOSIT"
+     },
+     "accountStatus": {
+      "S": "ACTIVE"
+     },
+     "accountName": {
+      "S": "บัญชีกระแสรายวัน"
+     },
+     "accountOwner": {
+      "S": "นายทดสอบ หนึ่ง"
+     },
+     "accountNameEn": {
+      "S": "Current Account"
+     },
+     "openingDate": {
+      "S": "2019-03-20T00:00:00"
+     },
+     "lastLedgerBalanceAmount": {
+      "N": "-2500.00"
+     },
+     "lastLedgerBalanceCurrency": {
+      "S": "THB"
+     },
+     "lastAvailableBalanceAmount": {
+      "N": "47500.00"
+     },
+     "lastAvailableBalanceCurrency": {
+      "S": "THB"
+     },
+     "creditLimit": {
+      "N": "50000.00"
+     },
+     "src_stm_id": {
+      "S": "MOCK"
+     },
+     "load_ts": {
+      "S": "2026-10-08T00:00:00"
+     },
+     "data_dt": {
+      "S": "2026-10-08"
+     }
+    }
+   }
+  },
+  {
+   "PutRequest": {
+    "Item": {
+     "accountId": {
+      "S": "3000000001"
+     },
+     "accountSubType": {
+      "S": "TERM"
+     },
+     "institutionName": {
+      "S": "MOCK BANK"
+     },
+     "ownerType": {
+      "S": "INDIVIDUAL"
+     },
+     "accountType": {
+      "S": "DEPOSIT"
+     },
+     "accountStatus": {
+      "S": "ACTIVE"
+     },
+     "accountName": {
+      "S": "บัญชีฝากประจำ"
+     },
+     "accountOwner": {
+      "S": "นายทดสอบ หนึ่ง"
+     },
+     "accountNameEn": {
+      "S": "Term Deposit"
+     },
+     "openingDate": {
+      "S": "2025-01-10T00:00:00"
+     },
+     "homeBranch": {
+      "S": "สาขาสีลม"
+     },
+     "homeBranchEn": {
+      "S": "Silom Branch"
+     },
+     "lastLedgerBalanceAmount": {
+      "N": "100000.00"
+     },
+     "lastLedgerBalanceCurrency": {
+      "S": "THB"
+     },
+     "src_stm_id": {
+      "S": "MOCK"
+     },
+     "load_ts": {
+      "S": "2026-10-08T00:00:00"
+     },
+     "data_dt": {
+      "S": "2026-10-08"
+     }
+    }
+   }
+  },
+  {
+   "PutRequest": {
+    "Item": {
+     "accountId": {
+      "S": "1000000003"
+     },
+     "accountSubType": {
+      "S": "SAVINGS"
+     },
+     "institutionName": {
+      "S": "MOCK BANK"
+     },
+     "ownerType": {
+      "S": "INDIVIDUAL"
+     },
+     "accountType": {
+      "S": "DEPOSIT"
+     },
+     "accountStatus": {
+      "S": "ACTIVE"
+     },
+     "accountName": {
+      "S": "นางทดสอบ สอง"
+     },
+     "accountOwner": {
+      "S": "นางทดสอบ สอง"
+     },
+     "accountNameEn": {
+      "S": "Mrs Test Two"
+     },
+     "openingDate": {
+      "S": "2021-09-09T00:00:00"
+     },
+     "homeBranch": {
+      "S": "สาขาลาดพร้าว"
+     },
+     "homeBranchEn": {
+      "S": "Lat Phrao Branch"
+     },
+     "lastLedgerBalanceAmount": {
+      "N": "820.75"
+     },
+     "lastLedgerBalanceCurrency": {
+      "S": "THB"
+     },
+     "lastAvailableBalanceAmount": {
+      "N": "820.75"
+     },
+     "lastAvailableBalanceCurrency": {
+      "S": "THB"
+     },
+     "src_stm_id": {
+      "S": "MOCK"
+     },
+     "load_ts": {
+      "S": "2026-10-08T00:00:00"
+     },
+     "data_dt": {
+      "S": "2026-10-08"
+     }
+    }
+   }
+  }
+ ]
+}
