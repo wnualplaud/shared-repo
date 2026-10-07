@@ -22,11 +22,12 @@ TEMPLATE_VARS=$(grep -oh '\${[A-Z_][A-Z0-9_]*}' "$DEPLOY_DIR"/templates/*.json |
 REQUIRED=$(printf '%s\n' $SCRIPT_VARS $TEMPLATE_VARS | sort -u)
 
 grep -q $'\r' "$CONFIG" && warn "CRLF line endings (the scripts strip them; better save as LF)"
-grep -n '<[A-Za-z0-9_-]*>' "$CONFIG" | sed 's/^/  ERROR placeholder left: line /' && ERR=$((ERR+1))
+PH=$(grep -n '<[^>]*>' "$CONFIG" | grep -v '^[0-9]*:[[:space:]]*#')
+[ -n "$PH" ] && { echo "$PH" | sed 's/^/  ERROR placeholder left: line /'; ERR=$((ERR+1)); }
 grep -q '^[[:space:]]*ACCOUNT_ID=' "$CONFIG" && warn "ACCOUNT_ID is set; scripts look it up themselves"
 
 # load without running anything else in the shell
-set -a; . <(sed 's/\r$//' "$CONFIG" | grep -v '<[A-Za-z0-9_-]*>'); set +a
+set -a; . <(sed 's/\r$//' "$CONFIG" | grep -v '^[[:space:]]*#' | grep -v '<[^>]*>'); set +a
 
 for v in $REQUIRED; do
   [ -n "${!v:-}" ] || err "$v is missing or empty"

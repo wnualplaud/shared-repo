@@ -6,8 +6,9 @@ ENV_NAME="${1:?usage: $0 <env>   (loads config/<env>.env)}"
 CONFIG="$DEPLOY_DIR/config/$ENV_NAME.env"
 [ -f "$CONFIG" ] || { echo "missing $CONFIG (copy $ENV_NAME.env.example and fill it)"; exit 1; }
 
-if grep -q '<[A-Za-z0-9_-]*>' "$CONFIG"; then
-  echo "unfilled values in $CONFIG:"; grep -n '<[A-Za-z0-9_-]*>' "$CONFIG"; exit 1
+# placeholders left in a value line (comments ignored)
+if grep -n '<[^>]*>' "$CONFIG" | grep -v '^[0-9]*:[[:space:]]*#' | grep -q .; then
+  echo "unfilled values in $CONFIG:"; grep -n '<[^>]*>' "$CONFIG" | grep -v '^[0-9]*:[[:space:]]*#'; exit 1
 fi
 
 # strip Windows CRLF so values do not end in \r

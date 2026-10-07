@@ -1,6 +1,8 @@
 # config/
 
-One file per environment: `config/<env>.env` (git-ignored). The scripts
+One file per environment: `config/<env>.env` (git-ignored), copied from
+`config/env.example`. When adding a key, add it to `env.example` and to every
+`<env>.env`; `scripts/compare-env.sh <env>` reports keys missing on either side. The scripts
 take the env name: `bash scripts/00-check.sh uat` loads `config/uat.env`.
 
 Variables the scripts and templates read (all required):
