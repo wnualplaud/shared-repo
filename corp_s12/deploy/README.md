@@ -11,6 +11,7 @@ out/<env>/           rendered JSON actually sent (git-ignored)
 ```
 
 ```bash
+bash scripts/validate-env.sh uat     # offline: config/uat.env complete and well-formed
 bash scripts/00-check.sh uat           # read-only: everything referenced exists
 bash scripts/10-task-role.sh uat       # create task role if missing, write its policy
 bash scripts/20-task-definition.sh uat # register a new revision
