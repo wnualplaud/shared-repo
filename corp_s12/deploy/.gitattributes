@@ -1,0 +1,4 @@
+# keep LF on Windows checkouts; bash fails on CRLF ("$'\r': command not found")
+*.sh   text eol=lf
+*.json text eol=lf
+*.env  text eol=lf

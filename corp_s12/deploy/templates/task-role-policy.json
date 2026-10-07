@@ -1,0 +1,53 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "DynamoReadEndpointTables",
+      "Effect": "Allow",
+      "Action": ["dynamodb:PartiQLSelect", "dynamodb:ExecuteStatement"],
+      "Resource": [
+        "arn:aws:dynamodb:${AWS_REGION}:${ACCOUNT_ID}:table/${TABLE_AC_LIST}",
+        "arn:aws:dynamodb:${AWS_REGION}:${ACCOUNT_ID}:table/${TABLE_AC_DTL}"
+      ]
+    },
+    {
+      "Sid": "AthenaRunQueries",
+      "Effect": "Allow",
+      "Action": [
+        "athena:StartQueryExecution",
+        "athena:GetQueryExecution",
+        "athena:GetQueryResults",
+        "athena:StopQueryExecution"
+      ],
+      "Resource": "arn:aws:athena:${AWS_REGION}:${ACCOUNT_ID}:workgroup/${ATHENA_WORKGROUP}"
+    },
+    {
+      "Sid": "GlueReadCatalog",
+      "Effect": "Allow",
+      "Action": ["glue:GetDatabase", "glue:GetTable", "glue:GetPartitions"],
+      "Resource": [
+        "arn:aws:glue:${AWS_REGION}:${ACCOUNT_ID}:catalog",
+        "arn:aws:glue:${AWS_REGION}:${ACCOUNT_ID}:database/${ATHENA_DATABASE}",
+        "arn:aws:glue:${AWS_REGION}:${ACCOUNT_ID}:table/${ATHENA_DATABASE}/*"
+      ]
+    },
+    {
+      "Sid": "S3BucketLevel",
+      "Effect": "Allow",
+      "Action": ["s3:GetBucketLocation", "s3:ListBucket"],
+      "Resource": "arn:aws:s3:::${BUCKET}"
+    },
+    {
+      "Sid": "S3ReadMartData",
+      "Effect": "Allow",
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::${BUCKET}/${MART_DATA_PREFIX}/*"
+    },
+    {
+      "Sid": "S3AthenaResults",
+      "Effect": "Allow",
+      "Action": ["s3:GetObject", "s3:PutObject", "s3:AbortMultipartUpload"],
+      "Resource": "arn:aws:s3:::${BUCKET}/${ATHENA_RESULTS_PREFIX}/*"
+    }
+  ]
+}

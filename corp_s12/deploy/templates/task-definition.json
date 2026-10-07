@@ -1,0 +1,42 @@
+{
+  "family": "${FAMILY}",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "runtimePlatform": {"cpuArchitecture": "X86_64", "operatingSystemFamily": "LINUX"},
+  "cpu": "512",
+  "memory": "1024",
+  "executionRoleArn": "arn:aws:iam::${ACCOUNT_ID}:role/${EXECUTION_ROLE}",
+  "taskRoleArn": "arn:aws:iam::${ACCOUNT_ID}:role/${TASK_ROLE}",
+  "containerDefinitions": [
+    {
+      "name": "app",
+      "image": "${ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${IMAGE_REPO}:${IMAGE_TAG}",
+      "essential": true,
+      "portMappings": [{"name": "http", "containerPort": 8080, "protocol": "tcp"}],
+      "environment": [
+        {"name": "AWS_DEFAULT_REGION", "value": "${AWS_REGION}"},
+        {"name": "AWS_REGION", "value": "${AWS_REGION}"},
+        {"name": "APP_ENV", "value": "${APP_ENV}"},
+        {"name": "ATHENA_DATABASE", "value": "${ATHENA_DATABASE}"},
+        {"name": "ATHENA_OUTPUT_LOCATION", "value": "s3://${BUCKET}/${ATHENA_RESULTS_PREFIX}/"},
+        {"name": "ATHENA_WORKGROUP", "value": "${ATHENA_WORKGROUP}"},
+        {"name": "ATHENA_QUERY_TIMEOUT_SECONDS", "value": "${ATHENA_QUERY_TIMEOUT_SECONDS}"}
+      ],
+      "healthCheck": {
+        "command": ["CMD-SHELL", "python -c \"import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/health', timeout=2)\" || exit 1"],
+        "interval": 30,
+        "timeout": 5,
+        "retries": 3,
+        "startPeriod": 10
+      },
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "${LOG_GROUP}",
+          "awslogs-region": "${AWS_REGION}",
+          "awslogs-stream-prefix": "${LOG_PREFIX}"
+        }
+      }
+    }
+  ]
+}

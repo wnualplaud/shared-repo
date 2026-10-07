@@ -1,0 +1,3 @@
+# real values stay on the machine that deploys
+config/*.env
+out/
