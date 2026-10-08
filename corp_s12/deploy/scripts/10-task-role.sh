@@ -3,13 +3,13 @@
 . "$(dirname "$0")/lib.sh"
 show_target
 
-render "$DEPLOY_DIR/templates/task-role-policy.json" "$OUT_DIR/task-role-policy.json"
+render "templates/task-role-policy.json" "$OUT_DIR/task-role-policy.json"
 
 if aws iam get-role --role-name "$TASK_ROLE" >/dev/null 2>&1; then
   echo "role exists: $TASK_ROLE"
 else
   aws iam create-role --role-name "$TASK_ROLE" \
-    --assume-role-policy-document "file://$DEPLOY_DIR/templates/ecs-task-trust-policy.json" \
+    --assume-role-policy-document "file://templates/ecs-task-trust-policy.json" \
     --tags Key=App,Value="$APP" --query 'Role.Arn' --output text
 fi
 

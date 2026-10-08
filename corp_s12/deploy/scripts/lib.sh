@@ -20,7 +20,10 @@ export MSYS_NO_PATHCONV=1               # Git Bash: keep /ecs/... as is
 
 ACCOUNT_ID="${ACCOUNT_ID:-$(aws sts get-caller-identity --query Account --output text)}"
 export ACCOUNT_ID
-OUT_DIR="$DEPLOY_DIR/out/$ENV_NAME"; mkdir -p "$OUT_DIR"
+# work from deploy/ and pass relative paths to the CLI: on Git Bash, aws.exe cannot open
+# /c/Users/... paths (MSYS_NO_PATHCONV=1 keeps them unconverted)
+cd "$DEPLOY_DIR"
+OUT_DIR="out/$ENV_NAME"; mkdir -p "$OUT_DIR"
 
 show_target() {
   echo "env=$ENV_NAME profile=$AWS_PROFILE region=$AWS_REGION account=$ACCOUNT_ID"

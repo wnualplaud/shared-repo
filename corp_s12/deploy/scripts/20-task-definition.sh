@@ -3,6 +3,6 @@
 . "$(dirname "$0")/lib.sh"
 show_target
 
-render "$DEPLOY_DIR/templates/task-definition.json" "$OUT_DIR/task-definition.json"
+render "templates/task-definition.json" "$OUT_DIR/task-definition.json"
 aws ecs register-task-definition --cli-input-json "file://$OUT_DIR/task-definition.json" \
   --query 'taskDefinition.[family,revision,containerDefinitions[0].image]' --output text
