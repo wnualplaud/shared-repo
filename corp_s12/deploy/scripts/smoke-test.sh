@@ -12,10 +12,10 @@ BASE="http://$TARGET"
 # expected-status | method | path | json body | what it checks   (mock data: tracks/t07-uat-deploy/mocked)
 CASES=$(cat <<'EOF'
 200|GET|/health||app is up
-200|POST|/account/list|{"citizen_id":"1100000000001","accountSubType":"SAVINGS","language":"EN","auxiliaryReferenceId":"r1"}|list: 2 SAVINGS accounts, EN with TH fallback
-200|POST|/account/list|{"citizen_id":"1100000000001","accountSubType":"CURRENT","language":"TH","auxiliaryReferenceId":"r1"}|list: 1 CURRENT account
-200|POST|/account/list|{"citizen_id":"1100000000009","accountSubType":"SAVINGS","auxiliaryReferenceId":"r1"}|list: unknown citizen -> empty list
-400|POST|/account/list|{"citizen_id":"1100000000001","accountSubType":"SAVINGS","language":"JP"}|unsupported language
+200|POST|/account/list|{"citizenId":"1100000000001","accountSubType":"SAVINGS","language":"EN","auxiliaryReferenceId":"r1"}|list: 2 SAVINGS accounts, EN with TH fallback
+200|POST|/account/list|{"citizenId":"1100000000001","accountSubType":"CURRENT","language":"TH","auxiliaryReferenceId":"r1"}|list: 1 CURRENT account
+200|POST|/account/list|{"citizenId":"1100000000009","accountSubType":"SAVINGS","auxiliaryReferenceId":"r1"}|list: unknown citizen -> empty list
+400|POST|/account/list|{"citizenId":"1100000000001","accountSubType":"SAVINGS","language":"JP"}|unsupported language
 200|POST|/account|{"accountId":"1000000001","accountSubType":"SAVINGS","language":"EN","auxiliaryReferenceId":"r1"}|account: EN name + EN home branch
 200|POST|/account|{"accountId":"1000000002","accountSubType":"SAVINGS","language":"EN","auxiliaryReferenceId":"r1"}|account: no EN -> TH fallback
 404|POST|/account|{"accountId":"1000000001","accountSubType":"CURRENT"}|account: subtype does not match

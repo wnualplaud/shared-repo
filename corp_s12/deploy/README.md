@@ -20,5 +20,12 @@ bash scripts/20-task-definition.sh uat # register a new revision
 bash scripts/30-run-task.sh uat        # run one task, report status/health/logs
 ```
 
-The image itself is built and pushed separately (CloudShell: docker build,
-docker tag, docker push).
+CloudShell (docker available) and CloudShell VPC environment (inside the VPC):
+
+```bash
+bash scripts/build-push.sh <deliverables-dir> <ecr-repo> <remote-tag>   # CloudShell
+bash scripts/smoke-test.sh <task-private-ip>                             # CloudShell VPC environment
+```
+
+`build-push.sh` refuses an existing tag; set the new tag as `IMAGE_TAG` in
+`config/<env>.env`, then run `20-task-definition.sh` and `30-run-task.sh`.
