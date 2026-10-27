@@ -13,24 +13,25 @@ from openpyxl.styles import Font
 
 from mock_dynamo import add_common_args, build
 
-# request keys, then what decides whether the API returns the row, names,
-# account, balance, system; the note last. Names are the API's field names.
+# what the row tests and the keys to send first; then the details by
+# importance (names and branch have the language logic, amounts later);
+# system columns last. Field columns use the API's names; accountKey is left
+# out (a storage key, testers never send it).
 COLUMNS = [
+    "test case", "visibleInApi",
     "citizenId", "accountId", "accountSubType",
-    "ownerType", "accountOwner", "accountStatus", "visibleInApi",
-    "accountName", "accountNameEn",
-    "accountType", "institutionName", "openingDate", "homeBranch", "homeBranchEn",
+    "accountName", "accountNameEn", "homeBranch", "homeBranchEn",
+    "ownerType", "accountOwner", "accountStatus", "accountType", "institutionName", "openingDate",
     "lastLedgerBalanceAmount", "lastLedgerBalanceCurrency",
     "lastAvailableBalanceAmount", "lastAvailableBalanceCurrency", "creditLimit",
-    "accountKey", "src_stm_id", "load_ts", "data_dt",
-    "หมายเหตุ",
+    "src_stm_id", "load_ts", "data_dt",
 ]
 
 
 def sheet_row(row, detail, note):
     merged = {**detail, **row}
     merged["visibleInApi"] = "Y" if (row["ownerType"], row["accountOwner"]) == ("INDIVIDUAL", "SINGLE") else "N"
-    merged["หมายเหตุ"] = note
+    merged["test case"] = note
     # every cell as text: Excel turns 13-digit ids into 1.23E+12 and drops
     # digits past 15 (9999999999999999.99)
     return [str(merged[c]) if c in merged else "" for c in COLUMNS]
@@ -55,7 +56,7 @@ def main():
             cell.number_format = "@"
     for col in ws.columns:
         ws.column_dimensions[col[0].column_letter].width = min(60, max(len(str(c.value or "")) for c in col) + 2)
-    ws.freeze_panes = "C2"
+    ws.freeze_panes = "F2"  # test case to accountSubType stay in view
     ws.auto_filter.ref = ws.dimensions
     wb.save(args.out)
     print(f"wrote {args.out}: {ws.max_row - 1} accounts, institutionName {args.institution!r}")

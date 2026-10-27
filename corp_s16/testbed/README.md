@@ -42,10 +42,11 @@ the same 11 + 11; the app's PartiQL returns `1234567001` and
 
 ## mock_sheet.py
 
-The same rows as one Excel sheet for testers: one account per row, the
-API's field names as columns (request keys, then what decides whether
-the API returns the row, names, account, balance, system columns),
-`visibleInApi` (`N` for `JOINT` / `JURISTIC`), and a Thai note last.
+The same rows as one Excel sheet for testers: one account per row.
+Columns: `test case` (a Thai note), `visibleInApi` (`N` for `JOINT` /
+`JURISTIC`), the keys to send, then the details by importance (names
+and branch, account, amounts), system columns last; field columns use
+the API's names; `accountKey` is left out.
 Every cell is text, so long ids and amounts keep their digits. Reads no
 AWS; needs `openpyxl`.
 
