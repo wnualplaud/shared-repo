@@ -7,6 +7,8 @@ from endpoint_handler_template import (
     single_row,
     select_by_language,
     require_language,
+    MART_SUBTYPES,
+    to_api_subtype,
 )
 from connectors import dynamo
 
@@ -17,7 +19,7 @@ class CustomAPIOperation(EndpointHandlerTemplate):
     query_path = Path(__file__).with_name("query.sql")
 
     
-    def bind_parameters(self) -> list:
+    def bind_parameters(self) -> dict:
 
         body = self.body
 
@@ -28,7 +30,10 @@ class CustomAPIOperation(EndpointHandlerTemplate):
         require_language(language)
         require_subtype(account_sub_type)
 
-        return [account_id, account_sub_type]
+        return {
+            "account_id": account_id,
+            "mart_account_sub_type": MART_SUBTYPES[account_sub_type],
+        }
 
 
     def build_mapping(self, rows: Any):
@@ -36,8 +41,8 @@ class CustomAPIOperation(EndpointHandlerTemplate):
         body = self.body
         row = single_row(rows)
         
-        aux_ref_id = self.body.get("auxiliaryReferenceId")
-        language = self.body.get("language")
+        aux_ref_id = body.get("auxiliaryReferenceId")
+        language = body.get("language")
         
         return {
             "auxiliaryReferenceId": aux_ref_id,
@@ -45,7 +50,7 @@ class CustomAPIOperation(EndpointHandlerTemplate):
             "accountId": row.get("accountId", ""),
             "ownerType": row.get("ownerType", ""),
             "accountType": row.get("accountType", ""),
-            "accountSubType": row.get("accountSubType", ""),
+            "accountSubType": to_api_subtype(row.get("accountSubType", "")),
             "accountStatus": row.get("accountStatus", ""),
             "accountName": select_by_language(
                 language=language,

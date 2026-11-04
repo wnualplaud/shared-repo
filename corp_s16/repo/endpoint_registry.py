@@ -29,6 +29,6 @@ ENDPOINTS = [
         "method": "POST",
         "path": "/rdx_ep5",
         "handler": "rdx_ep5.endpoint",
-        "enabled": False,
+        "enabled": True,
     },
 ]

@@ -1,13 +1,25 @@
 from typing import Any
 from pathlib import Path
 
+from datetime import datetime
+
 from endpoint_handler_template import EndpointHandlerTemplate
 from endpoint_handler_template import (
+    single_row,
+    require_rows,
     require_subtype,
     require_language,
     select_by_language,
+    TZ_TH, athena_to_th_iso,
+    MART_SUBTYPES,
+    to_amount,
 )
-from connectors import athena
+from connectors import athena, dynamo
+import sql_builder
+
+
+
+ACCOUNT_CHECK_PATH = Path(__file__).with_name("account_check.sql")
 
 
 
@@ -16,23 +28,62 @@ class CustomAPIOperation(EndpointHandlerTemplate):
     connector = athena
     query_path = Path(__file__).with_name("query.sql")
 
+
+    def handle(self):
+
+        require_language(self.body.get("language"))
+        require_subtype(self.body.get("accountSubType"))
+        self.account = self.check_account()
+        return super().handle()
     
-    def bind_parameters(self) -> list:
+    
+    def check_account(self):
+        
+        body = self.body
+        account_id = body.get("accountId")
+        account_sub_type = body.get("accountSubType")
+
+        query, values = sql_builder.bind(
+            sql_builder.load_query(ACCOUNT_CHECK_PATH),
+            params={
+                        "account_id": account_id,
+                        "mart_account_sub_type": MART_SUBTYPES[account_sub_type],
+                    }
+
+        )
+
+        rows = dynamo.execute(query, values)
+
+        return single_row(rows)
+
+    
+    def bind_parameters(self) -> dict:
 
         body = self.body
 
-        account_id = body.get("accountId")
-        account_sub_type = body.get("accountSubType")
-        language = body.get("language")
-        # date range: data_dt (DATE partition) BETWEEN date(from)..date(to) for pruning,
-        # then bookingDateTime BETWEEN from..to; same two params feed both
+        account_id = self.account["accountId"]
+        src_stm_id = self.account["src_stm_id"]
+
         from_booking_dttm = body.get("fromBookingDateTime")
         to_booking_dttm = body.get("toBookingDateTime")
 
-        require_language(language)
-        require_subtype(account_sub_type)
+        from_dttm = (
+            datetime.fromisoformat(from_booking_dttm) 
+        ).astimezone(TZ_TH)
 
-        return [account_id]
+        to_dttm = (
+            datetime.fromisoformat(to_booking_dttm) 
+        ).astimezone(TZ_TH)
+
+        # the :names in query.sql; data_dt (varchar partition) is the Thai date (assumed, r06 c03)
+        return {
+            "from_data_dt": from_dttm.date().isoformat(), 
+            "to_data_dt": to_dttm.date().isoformat(),  
+            "src_stm_id": src_stm_id,
+            "from_booking_dttm": from_dttm.isoformat(), 
+            "to_booking_dttm": to_dttm.isoformat(),               
+            "account_id": account_id
+        }
 
 
     def build_mapping(self, query_result: Any):
@@ -43,9 +94,9 @@ class CustomAPIOperation(EndpointHandlerTemplate):
 
         transaction_entries = [
             {
-                "bookingDateTime": row.get("bookingDateTime"),                                       # 1.3.1
-                "valueDateTime": row.get("valueDateTime"),                                           # 1.3.2
-                "subAccountLevelMaturityDate": row.get("subAccountLevelMaturityDate"),               # 1.3.3
+                "bookingDateTime": athena_to_th_iso(row.get("bookingDateTime")),                                       # 1.3.1
+                "valueDateTime": athena_to_th_iso(row.get("valueDateTime")),                                           # 1.3.2
+                "subAccountLevelMaturityDate": athena_to_th_iso(row.get("subAccountLevelMaturityDate")),               # 1.3.3
                 "commonTransactionCode": {                                                           # 1.3.4
                     "domainCode": row.get("domainCode"),                                             # 1.3.4.1
                     "familyCode": row.get("familyCode"),                                             # 1.3.4.2
@@ -54,7 +105,7 @@ class CustomAPIOperation(EndpointHandlerTemplate):
                 "proprietaryBankTransactionCode": row.get("proprietaryBankTransactionCode"),         # 1.3.5
                 "proprietaryBankTransactionDescription": row.get("proprietaryBankTransactionDescription"),  # 1.3.6
                 "creditDebitIndicator": row.get("creditDebitIndicator"),                             # 1.3.7
-                "amount": row.get("amount"),                                                         # 1.3.8
+                "amount": to_amount(row.get("amount")),                                                         # 1.3.8
                 "amountCurrency": row.get("amountCurrency"),                                         # 1.3.9
                 "transactionId": row.get("transactionId"),                                           # 1.3.10
                 "transactionRef": row.get("transactionRef"),                                         # 1.3.11
@@ -76,6 +127,8 @@ class CustomAPIOperation(EndpointHandlerTemplate):
 
             for row in query_result
         ]
+
+        require_rows(transaction_entries, detail="No transactions found")
 
         return {
             "transactionHeader": {                                                                   # 1

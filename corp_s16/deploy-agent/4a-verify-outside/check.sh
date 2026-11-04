@@ -18,7 +18,7 @@ read -r running desired deployments rollout <<<"$(aws ecs describe-services --cl
 [ "$running" = "$desired" ] && ok "running $running of $desired" || { warn "running $running of $desired"; status=1; }
 [ "$deployments" = 1 ] && ok "one deployment, rollout $rollout" || { warn "$deployments deployments (rollout $rollout)"; status=1; }
 
-say "targets (B10: unhealthy with 404 is known while the health check path is /)"
+say "targets (expected: healthy)"
 tg=$(aws ecs describe-services --cluster "$CLUSTER" --services "$SERVICE" --query 'services[0].loadBalancers[0].targetGroupArn' --output text)
 if none "$tg"; then
     warn "no load balancer on the service: skipped"

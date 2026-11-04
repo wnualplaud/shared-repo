@@ -31,9 +31,21 @@ old_image=$(aws ecs describe-task-definition --task-definition "$old_td" \
 [ "$(grep -c "\"$old_image\"" "$OUT/old.json")" = 1 ] || fail "image $old_image not found exactly once in the task definition"
 sed "s|\"$old_image\"|\"$new_image\"|" "$OUT/old.json" > "$OUT/new.json"
 
-say "diff (only the image should change)"
-diff "$OUT/old.json" "$OUT/new.json" || true
-[ "$(diff "$OUT/old.json" "$OUT/new.json" | grep -c '^[<>]')" = 2 ] || fail "more than the image changed"
+# optional TASK_ENV in the env file ("APP_ENV=uatmock ATHENA_DATABASE=..."): set those env values too
+allowed=(-e "\"image\": \"$new_image\"")
+if [ -n "${TASK_ENV:-}" ]; then
+    say "container env to set: $TASK_ENV"
+    set_task_env "$OUT/new.json" "$TASK_ENV"
+    for kv in $TASK_ENV; do allowed+=(-e "\"value\": \"${kv#*=}\""); done
+fi
+
+say "diff (only the image${TASK_ENV:+ and the env values above} should change)"
+# --strip-trailing-cr: on Windows the AWS CLI writes CRLF while sed writes LF
+diff --strip-trailing-cr "$OUT/old.json" "$OUT/new.json" || true
+changes=$(diff --strip-trailing-cr "$OUT/old.json" "$OUT/new.json" | grep '^[<>]' || true)
+[ "$(grep -c '^<' <<<"$changes" || true)" = "$(grep -c '^>' <<<"$changes" || true)" ] || fail "lines added or removed"
+unexpected=$(grep '^>' <<<"$changes" | grep -vF "${allowed[@]}" || true)
+[ -z "$unexpected" ] || fail "more than the image${TASK_ENV:+ and env} changed: $unexpected"
 
 if [ "$DRY" = --dry-run ]; then
     say "dry run: would run"

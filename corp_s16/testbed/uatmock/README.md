@@ -27,6 +27,9 @@ last 4 digits: check them.
 
    ```bash
    unzip -o testbed.zip -d ~/c11 && cd ~/c11/testbed/uatmock   # adjust to the zip's layout
+   chmod -R u+w ~/c11                                         # a zip from Windows unpacks read-only
+   find ~/c11/testbed -type f -exec sed -i 's/\r$//' {} +     # CRLF from Windows ("invalid option name: pipefail")
+   command -v envsubst || sudo dnf install -y gettext         # CloudShell has no envsubst
    ```
 
 2. Step by step, pasting each result before the next:
@@ -35,7 +38,7 @@ last 4 digits: check them.
    bash c11.sh check      # read only
    bash c11.sh dynamodb   # expect: ACTIVE, {}, items: 11 (each table)
    bash c11.sh policy     # expect: yourdata-api-uatmock among 7 policies
-   bash c11.sh athena     # expect: 3 x SUCCEEDED, rows, accounts: 20 ...
+   bash c11.sh athena     # expect: 4 x SUCCEEDED, rows, accounts: 20 10
    bash c11.sh grants     # expect: ok
    bash c11.sh verify     # read only: the whole picture
    ```

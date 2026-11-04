@@ -18,7 +18,7 @@ if [ -z "$base" ] || [[ "$base" == *"<"* ]]; then
 fi
 acct=${SMOKE_ACCOUNT_ID:-0000000000}; [[ "$acct" == *"<"* ]] && acct=0000000000
 cid=${SMOKE_CITIZEN_ID:-0000000000000}; [[ "$cid" == *"<"* ]] && cid=0000000000000
-sub=${SMOKE_SUBTYPE:-SAVING}
+sub=${SMOKE_SUBTYPE:-SAVINGS}
 say "calling $base"
 
 call() {  # path body -> prints the status code and the start of the body
@@ -37,6 +37,7 @@ call /rdx_ep1 "{\"citizenId\":\"$cid\",\"accountSubType\":\"$sub\",\"language\":
 call /rdx_ep2      "{\"accountId\":\"$acct\",\"accountSubType\":\"$sub\",\"language\":\"TH\",\"auxiliaryReferenceId\":\"smoke\"}"
 call /rdx_ep3      "{\"accountId\":\"$acct\",\"accountSubType\":\"$sub\",\"language\":\"TH\",\"auxiliaryReferenceId\":\"smoke\"}"
 call /rdx_ep4  "{\"accountId\":\"$acct\",\"accountSubType\":\"$sub\",\"language\":\"TH\",\"auxiliaryReferenceId\":\"smoke\",\"fromBookingDateTime\":\"2026-10-01T00:00:00+07:00\",\"toBookingDateTime\":\"2026-10-26T23:59:59+07:00\"}"
+call /rdx_ep5    "{\"accountId\":\"$acct\",\"accountSubType\":\"$sub\",\"language\":\"TH\",\"auxiliaryReferenceId\":\"smoke\",\"fromBookingDateTime\":\"2026-10-01T00:00:00+07:00\",\"toBookingDateTime\":\"2026-10-26T23:59:59+07:00\"}"
 
 [ $status = 0 ] && ok "no 5xx" || warn "a call failed (5xx or no answer)"
 exit $status

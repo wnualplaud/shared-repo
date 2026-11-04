@@ -1,9 +1,19 @@
-REFS/
-__pycache__/
+# env
+**/*.env
+
+# py
+**/.venv/
 **/__pycache__/
-*.pyc
 **/*.pyc
-*.md
 **/*.md
 
-*:Zone.Identifier
+# ide
+**/.vscode/
+
+# local scratch
+manual-stash/
+staging/
+REFS/
+
+# misc
+**/*:Zone.Identifier

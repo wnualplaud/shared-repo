@@ -4,7 +4,9 @@ from pathlib import Path
 from endpoint_handler_template import EndpointHandlerTemplate
 from endpoint_handler_template import (
     require_subtype,
-    single_row
+    single_row,
+    MART_SUBTYPES,
+    to_amount,
 )
 from connectors import dynamo
 
@@ -15,7 +17,7 @@ class CustomAPIOperation(EndpointHandlerTemplate):
     query_path = Path(__file__).with_name("query.sql")
 
     
-    def bind_parameters(self) -> list:
+    def bind_parameters(self) -> dict:
 
         body = self.body
 
@@ -24,7 +26,10 @@ class CustomAPIOperation(EndpointHandlerTemplate):
 
         require_subtype(account_sub_type)
 
-        return [account_id, account_sub_type]
+        return {
+            "account_id": account_id, 
+            "mart_account_sub_type": MART_SUBTYPES[account_sub_type],
+        }
 
 
     def build_mapping(self, rows: Any):
@@ -36,11 +41,11 @@ class CustomAPIOperation(EndpointHandlerTemplate):
         return {
                 "auxiliaryReferenceId": auxiliary_ref_id,
                 "accountId": row.get("accountId", ""),
-                "lastLedgerBalanceAmount": row.get("lastLedgerBalanceAmount", ""),
+                "lastLedgerBalanceAmount": to_amount(row.get("lastLedgerBalanceAmount")),
                 "lastLedgerBalanceCurrency": row.get("lastLedgerBalanceCurrency", ""),
-                "lastAvailableBalanceAmount": row.get("lastAvailableBalanceAmount", ""),
+                "lastAvailableBalanceAmount": to_amount(row.get("lastAvailableBalanceAmount")),
                 "lastAvailableBalanceCurrency": row.get("lastAvailableBalanceCurrency", ""),
-                "creditLimit": row.get("creditLimit", ""),
+                "creditLimit": to_amount(row.get("creditLimit")),
         }
 
 

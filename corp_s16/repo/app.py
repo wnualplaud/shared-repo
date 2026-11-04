@@ -1,6 +1,7 @@
 import importlib
+import simplejson
+from fastapi import FastAPI, Response
 
-from fastapi import FastAPI
 
 from endpoint_registry import ENDPOINTS
 
@@ -21,7 +22,15 @@ def register_endpoint(endpoint_config):
     def route_handler(body: dict):
         handler = endpoint_handler_class(body=body)
         handler.authenticate()
-        return handler.handle()
+        result = handler.handle()
+        return Response(
+            content=simplejson.dumps(
+                result, 
+                use_decimal=True, 
+                ensure_ascii=False
+            ),
+            media_type="application/json",
+        )
 
     app.add_api_route(
         endpoint_config["path"],
