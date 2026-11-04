@@ -1,0 +1,212 @@
+{
+  "rdx${ENV}_tbl1": [
+    {
+      "PutRequest": {
+        "Item": {
+          "institutionName": {"S": "MOCK BANK"},
+          "citizenId": {"S": "1234567890001"},
+          "accountKey": {"S": "SAVING#1234567001"},
+          "accountId": {"S": "1234567001"},
+          "accountSubType": {"S": "SAVING"},
+          "accountStatus": {"S": "ACTIVE"},
+          "accountName": {"S": "ทดสอบ 1234567001"},
+          "accountNameEn": {"S": "TEST 1234567001"},
+          "ownerType": {"S": "INDIVIDUAL"},
+          "accountOwner": {"S": "SINGLE"},
+          "src_stm_id": {"S": "MOCK"},
+          "load_ts": {"S": "2026-10-27T05:00:00+07:00"},
+          "data_dt": {"S": "2026-10-27"}
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "institutionName": {"S": "MOCK BANK"},
+          "citizenId": {"S": "1234567890001"},
+          "accountKey": {"S": "CURRENT#1234567002"},
+          "accountId": {"S": "1234567002"},
+          "accountSubType": {"S": "CURRENT"},
+          "accountStatus": {"S": "ACTIVE"},
+          "accountName": {"S": "ทดสอบ 1234567002"},
+          "ownerType": {"S": "INDIVIDUAL"},
+          "accountOwner": {"S": "SINGLE"},
+          "src_stm_id": {"S": "MOCK"},
+          "load_ts": {"S": "2026-10-27T05:00:00+07:00"},
+          "data_dt": {"S": "2026-10-27"}
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "institutionName": {"S": "MOCK BANK"},
+          "citizenId": {"S": "1234567890001"},
+          "accountKey": {"S": "SAVING#1234567003"},
+          "accountId": {"S": "1234567003"},
+          "accountSubType": {"S": "SAVING"},
+          "accountStatus": {"S": "ACTIVE"},
+          "accountName": {"S": "ทดสอบ 1234567003"},
+          "accountNameEn": {"S": "TEST 1234567003"},
+          "ownerType": {"S": "INDIVIDUAL"},
+          "accountOwner": {"S": "JOINT"},
+          "src_stm_id": {"S": "MOCK"},
+          "load_ts": {"S": "2026-10-27T05:00:00+07:00"},
+          "data_dt": {"S": "2026-10-27"}
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "institutionName": {"S": "MOCK BANK"},
+          "citizenId": {"S": "1234567890001"},
+          "accountKey": {"S": "TERM#1234567004"},
+          "accountId": {"S": "1234567004"},
+          "accountSubType": {"S": "TERM"},
+          "accountStatus": {"S": "ACTIVE"},
+          "accountName": {"S": "ทดสอบ 1234567004"},
+          "accountNameEn": {"S": "TEST 1234567004"},
+          "ownerType": {"S": "INDIVIDUAL"},
+          "accountOwner": {"S": "SINGLE"},
+          "src_stm_id": {"S": "MOCK"},
+          "load_ts": {"S": "2026-10-27T05:00:00+07:00"},
+          "data_dt": {"S": "2026-10-27"}
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "institutionName": {"S": "MOCK BANK"},
+          "citizenId": {"S": "1234567890001"},
+          "accountKey": {"S": "SAVING#1234567005"},
+          "accountId": {"S": "1234567005"},
+          "accountSubType": {"S": "SAVING"},
+          "accountStatus": {"S": "ACTIVE"},
+          "accountName": {"S": "ทดสอบ 1234567005"},
+          "accountNameEn": {"S": "TEST 1234567005"},
+          "ownerType": {"S": "INDIVIDUAL"},
+          "accountOwner": {"S": "SINGLE"},
+          "src_stm_id": {"S": "MOCK"},
+          "load_ts": {"S": "2026-10-27T05:00:00+07:00"},
+          "data_dt": {"S": "2026-10-27"}
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "institutionName": {"S": "MOCK BANK"},
+          "citizenId": {"S": "1234567890002"},
+          "accountKey": {"S": "SAVING#1234567006"},
+          "accountId": {"S": "1234567006"},
+          "accountSubType": {"S": "SAVING"},
+          "accountStatus": {"S": "ACTIVE"},
+          "accountName": {"S": "ทดสอบ 1234567006"},
+          "accountNameEn": {"S": "TEST 1234567006"},
+          "ownerType": {"S": "JURISTIC"},
+          "accountOwner": {"S": "SINGLE"},
+          "src_stm_id": {"S": "MOCK"},
+          "load_ts": {"S": "2026-10-27T05:00:00+07:00"},
+          "data_dt": {"S": "2026-10-27"}
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "institutionName": {"S": "MOCK BANK"},
+          "citizenId": {"S": "1234567890002"},
+          "accountKey": {"S": "TERM#1234567007"},
+          "accountId": {"S": "1234567007"},
+          "accountSubType": {"S": "TERM"},
+          "accountStatus": {"S": "ACTIVE"},
+          "accountName": {"S": "ทดสอบ 1234567007"},
+          "accountNameEn": {"S": "TEST 1234567007"},
+          "ownerType": {"S": "INDIVIDUAL"},
+          "accountOwner": {"S": "SINGLE"},
+          "src_stm_id": {"S": "MOCK"},
+          "load_ts": {"S": "2026-10-27T05:00:00+07:00"},
+          "data_dt": {"S": "2026-10-27"}
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "institutionName": {"S": "MOCK BANK"},
+          "citizenId": {"S": "1234567890003"},
+          "accountKey": {"S": "SAVING#1234567008"},
+          "accountId": {"S": "1234567008"},
+          "accountSubType": {"S": "SAVING"},
+          "accountStatus": {"S": "ACTIVE"},
+          "accountName": {"S": "ทดสอบ 1234567008"},
+          "accountNameEn": {"S": "TEST 1234567008"},
+          "ownerType": {"S": "INDIVIDUAL"},
+          "accountOwner": {"S": "JOINT"},
+          "src_stm_id": {"S": "MOCK"},
+          "load_ts": {"S": "2026-10-27T05:00:00+07:00"},
+          "data_dt": {"S": "2026-10-27"}
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "institutionName": {"S": "MOCK BANK"},
+          "citizenId": {"S": "1234567890004"},
+          "accountKey": {"S": "SAVING#1234567009"},
+          "accountId": {"S": "1234567009"},
+          "accountSubType": {"S": "SAVING"},
+          "accountStatus": {"S": "ACTIVE"},
+          "accountName": {"S": "ทดสอบ 1234567009"},
+          "accountNameEn": {"S": "TEST 1234567009"},
+          "ownerType": {"S": "INDIVIDUAL"},
+          "accountOwner": {"S": "SINGLE"},
+          "src_stm_id": {"S": "MOCK"},
+          "load_ts": {"S": "2026-10-27T05:00:00+07:00"},
+          "data_dt": {"S": "2026-10-27"}
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "institutionName": {"S": "MOCK BANK"},
+          "citizenId": {"S": "1234567890004"},
+          "accountKey": {"S": "SAVING#1234567010"},
+          "accountId": {"S": "1234567010"},
+          "accountSubType": {"S": "SAVING"},
+          "accountStatus": {"S": "ACTIVE"},
+          "accountName": {"S": "ทดสอบ 1234567010"},
+          "accountNameEn": {"S": "TEST 1234567010"},
+          "ownerType": {"S": "INDIVIDUAL"},
+          "accountOwner": {"S": "SINGLE"},
+          "src_stm_id": {"S": "MOCK"},
+          "load_ts": {"S": "2026-10-27T05:00:00+07:00"},
+          "data_dt": {"S": "2026-10-27"}
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "institutionName": {"S": "MOCK BANK"},
+          "citizenId": {"S": "1234567890004"},
+          "accountKey": {"S": "SAVING#1234567011"},
+          "accountId": {"S": "1234567011"},
+          "accountSubType": {"S": "SAVING"},
+          "accountStatus": {"S": "ACTIVE"},
+          "accountName": {"S": "ทดสอบ 1234567011"},
+          "accountNameEn": {"S": "TEST 1234567011"},
+          "ownerType": {"S": "INDIVIDUAL"},
+          "accountOwner": {"S": "SINGLE"},
+          "src_stm_id": {"S": "MOCK"},
+          "load_ts": {"S": "2026-10-27T05:00:00+07:00"},
+          "data_dt": {"S": "2026-10-27"}
+        }
+      }
+    }
+  ]
+}
