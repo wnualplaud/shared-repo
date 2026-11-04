@@ -106,7 +106,12 @@ policy() {
    "Resource": "arn:aws:s3:::rdxorg-rdx-uat-share/yourdata-api-mock/*"},
   {"Sid": "S3MockList", "Effect": "Allow", "Action": "s3:ListBucket",
    "Resource": "arn:aws:s3:::rdxorg-rdx-uat-share",
-   "Condition": {"StringLike": {"s3:prefix": "yourdata-api-mock/*"}}}
+   "Condition": {"StringLike": {"s3:prefix": "yourdata-api-mock/*"}}},
+  {"Sid": "GlueMockRead", "Effect": "Allow",
+   "Action": ["glue:GetDatabase", "glue:GetTable", "glue:GetPartition", "glue:GetPartitions", "glue:BatchGetPartition"],
+   "Resource": ["arn:aws:glue:${AWS_REGION}:${ACCT}:catalog",
+                "arn:aws:glue:${AWS_REGION}:${ACCT}:database/${DB}",
+                "arn:aws:glue:${AWS_REGION}:${ACCT}:table/${DB}/*"]}
 ]}
 EOF
     aws iam put-role-policy --role-name "$ROLE" --policy-name "$POLICY" --policy-document file:///tmp/policy.json
