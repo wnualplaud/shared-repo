@@ -1,0 +1,27 @@
+SELECT DISTINCT
+
+        TRIM(RFILE.RDXSRCR_CODE)                                   AS RDXSRC_CODE
+    ,   TRIM(RFILE.RDXSRCT_CODE)                                   AS LINK_T_CODE
+    ,   TRIM(CAST(RDXSET_SPC.COLL AS STRING))                     AS CMS_COLL_ID
+    ,   TRIM(RDXSET_SPC.CUST_RDXCUST)                                 AS RDXCUST_NO
+    ,   'r'                                                     AS LINE
+
+FROM `${hivevar:environment}_PERSIST_RDXSRC_DB`.RDXSRC_TBL_RDXSRC_RDXSET_RFILE_INFO RFILE
+
+    INNER JOIN `${hivevar:environment}_PERSIST_RDXSRC_DB`.RDXSRC_TBL_RDXSRC_RDXSET_TFILE_INFO TFILE
+        ON TRIM(TFILE.RDXSRCT_CODE) = TRIM(RFILE.RDXSRCT_CODE)
+       AND TFILE.DL_DATA_DT = '${hivevar:snap_dt}'
+
+    INNER JOIN `${hivevar:environment}_PERSIST_RDXSRC_DB`.RDXSRC_TBL_RDXSRC_RDXSET_SPC RDXSET_SPC
+        ON RDXSET_SPC.RDXSET_ID = TFILE.RDXSET_ID
+       AND RDXSET_SPC.DL_DATA_DT = '${hivevar:snap_dt}'
+
+WHERE RFILE.DL_DATA_DT = '${hivevar:snap_dt}'
+
+  AND RDXSET_SPC.COLL IS NOT NULL
+  AND TRIM(RDXSET_SPC.COLL) <> ''
+  AND LOWER(TRIM(RDXSET_SPC.COLL)) <> 'null'
+
+  AND RDXSET_SPC.CUST_RDXCUST IS NOT NULL
+  AND TRIM(RDXSET_SPC.CUST_RDXCUST) <> ''
+  AND LOWER(TRIM(RDXSET_SPC.CUST_RDXCUST)) <> 'null'

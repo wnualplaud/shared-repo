@@ -1,0 +1,14 @@
+# cleanup/tables.txt --- tables to drop, written by hand. One <db>.<table> per line.
+# Read before running: ./run.sh <env> cleanup cleanup/tables.txt
+# Each is checked (exists, location, rows) and confirmed by typing its name.
+# Lines starting with # are skipped. Only tables in TMP_DB are touched.
+# Replace <env>; uncomment what to drop.
+
+# <env>_outbound_tmp_db.C03_OUT_U
+# <env>_outbound_tmp_db.C03_OUT_R
+# <env>_outbound_tmp_db.C03_OUT_T
+# <env>_outbound_tmp_db.C03_OUT_CARD
+# <env>_outbound_tmp_db.C03_R_RDXCUST
+# <env>_outbound_tmp_db.C03_T_RDXCUST
+# <env>_outbound_tmp_db.C03_CARD_RDXCUST
+# <env>_outbound_tmp_db.C03_STOCK_ITEM
