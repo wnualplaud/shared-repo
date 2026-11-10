@@ -4,8 +4,10 @@
 # Lines starting with # are skipped. Only tables in TMP_DB are touched.
 # Replace <env>; uncomment what to drop.
 
+# <env>_outbound_tmp_db.C03_OUT_R_CARD
 # <env>_outbound_tmp_db.C03_OUT_U
 # <env>_outbound_tmp_db.C03_OUT_R
+# <env>_outbound_tmp_db.C03_R_CARD_RDXCUST
 # <env>_outbound_tmp_db.C03_OUT_T
 # <env>_outbound_tmp_db.C03_OUT_CARD
 # <env>_outbound_tmp_db.C03_R_RDXCUST

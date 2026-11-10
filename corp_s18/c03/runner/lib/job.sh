@@ -14,11 +14,15 @@ run_job() {
     say "job $name: $DESC"
     say "query queries/$QUERY -> $TMP_DB.$OUT; created $FROM..$TO; snapshot $SNAP_DT"
 
+    if [ -n "$DRY" ]; then
+        say "dry run: no beeline; NEEDS ($NEEDS) and whether $OUT exists are not checked"
+    else
     for t in $NEEDS; do
         table_exists "$TMP_DB" "$t" || die "needs $TMP_DB.$t: run its job first"
     done
     if table_exists "$TMP_DB" "$OUT"; then
         die "$TMP_DB.$OUT exists already; to rebuild, list it in a cleanup file and run cleanup first"
+    fi
     fi
 
     sql="${LOG%.log}.hql"
@@ -32,6 +36,13 @@ run_job() {
         echo ";"
     } > "$sql"
     say "generated $sql"
+
+    if [ -n "$DRY" ]; then
+        resolve "$sql" > "${sql%.hql}.resolved.hql"
+        cat "${sql%.hql}.resolved.hql" | tee -a "$LOG"
+        say "dry run done: ${sql%.hql}.resolved.hql (nothing was run)"
+        return 0
+    fi
 
     bl -f "$sql" "${HV[@]}" --hivevar from_dt="$FROM" --hivevar to_dt="$TO" \
         || die "job $name failed (see $LOG)"

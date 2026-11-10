@@ -17,6 +17,12 @@ load_env() {
     LOG_DIR="logs/$1"; mkdir -p "$LOG_DIR"
 }
 
+resolve() {
+    sed -e "s|\${hivevar:environment}|$ENV|g; s|\${hivevar:env}|$ENV|g; s|\${hivevar:dbdwenv}|$DBDWENV|g" \
+        -e "s|\${hivevar:snap_dt}|$SNAP_DT|g; s|\${hivevar:tmp_db}|$TMP_DB|g; s|\${hivevar:prefix}|$PREFIX|g" \
+        -e "s|\${hivevar:from_dt}|${FROM:-$FROM_DT}|g; s|\${hivevar:to_dt}|${TO:-$TO_DT}|g" "$@"
+}
+
 start_log() { LOG="$LOG_DIR/$(date +%Y%m%d_%H%M%S)_$1.log"; say "log: $LOG"; }
 
 bl() {
@@ -43,11 +49,12 @@ guard_name() {
 }
 
 dates() {
-    FROM="$FROM_DT"; TO="$TO_DT"
+    FROM="$FROM_DT"; TO="$TO_DT"; DRY=""
     while [ $# -gt 0 ]; do
         case "$1" in
-            --from) FROM="${2:?--from <yyyy-mm-dd>}"; shift 2 ;;
-            --to)   TO="${2:?--to <yyyy-mm-dd>}";     shift 2 ;;
+            --from)    FROM="${2:?--from <yyyy-mm-dd>}"; shift 2 ;;
+            --to)      TO="${2:?--to <yyyy-mm-dd>}";     shift 2 ;;
+            --dry-run) DRY=1;                            shift ;;
             *)      die "unknown option $1" ;;
         esac
     done
