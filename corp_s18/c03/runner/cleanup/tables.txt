@@ -12,4 +12,5 @@
 # <env>_outbound_tmp_db.CHK_RDXSET_R
 # <env>_outbound_tmp_db.CHK_RDXSET_T
 # <env>_outbound_tmp_db.CHK_CARD
+# <env>_outbound_tmp_db.CHK_ITEM_TRACE
 # <env>_outbound_tmp_db.CHK_STOCK_ITEM

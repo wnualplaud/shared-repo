@@ -17,6 +17,9 @@ c9f3c29f6b73c9627e2b9af58c5887aae92ef1c2  ./checks/v302_o0_sums_vs_prod.sql
 9d1a121bb761af75bc8e2f3a4f9a5b1129d903e4  ./checks/v303_turning_point.sql
 122f0456c245b8e5d2d8d4286f8308904195ff88  ./checks/v304_o0_rdxcust_per_item.sql
 424f1d7791aef7be8a33d2a23ca30823f9cb7e65  ./checks/v305_prod_by_load_day.sql
+94ba97cf7c74afb09a6a3dd8c9eda6960e468633  ./checks/v306_trace_by_stage.sql
+65a83c191397665d22dd1dec82e6da2ee0d9fe8f  ./checks/v307_trace_y_keys.sql
+75ae791b7faadcd91e45b3dee49b379c6ff681c0  ./checks/v308_y_customers_per_job.sql
 0ae2ca3ab5ee958a573da51319d589d9b1c81271  ./checks/v3r1_r_shapes.sql
 0eb497e3cea24e35783bcbea99afb411c9ebe612  ./checks/v3r2_r_rdxcust_per_item.sql
 d424958e96dadf660c15bb923e97e5d92f757f1f  ./checks/v3r3_r_items_reached.sql
@@ -24,8 +27,9 @@ d424958e96dadf660c15bb923e97e5d92f757f1f  ./checks/v3r3_r_items_reached.sql
 63bee4cc4706d1a9cfab2d970ef8965cf2a23b47  ./checks/v3t2_t_shapes.sql
 f7098c4cc0edb8d96e5124a5574c2ad9a93122e3  ./checks/v3t3_t_rdxcust_per_item.sql
 3e97d4912c2524bfa1845647dcdf0b70f8745791  ./checks/v3t4_t_items_reached.sql
-e0153b9bda45e39c58a8dc73ab56ed3278749782  ./cleanup/tables.txt
+9c0ca11f827fc8b3978211b0407349d081d0ea35  ./cleanup/tables.txt
 25df3463ecca6ec34dc270e9f2e3a5272a29457c  ./env/example.env
+27c21305ce62346c1832d25710349f3f56510532  ./jobs/d1_item_trace.conf
 73e19c47269a492aa7455675e008d42b4d1d4660  ./jobs/o0_prepare.conf
 b20a2d8665d98395ed622b4d9f9c9b22e18b99c1  ./jobs/or1_rdxset.conf
 20b3d94d60f5aad4fa2820bce6ef450850925e42  ./jobs/or2_card.conf
@@ -40,6 +44,7 @@ c0dcefe16e8349620bcfc7c53aa61c8d9b59e184  ./jobs/p3_rdxset_t.conf
 f299ad9420ca0ab3be60d9a4ee7a533e98a8ab61  ./lib/common.sh
 8304bd73154f68e7af04143a0bda0e967bde7447  ./lib/job.sh
 66a03d4d435c45ab7233658609a6888a025e3efa  ./lib/tables.sh
+1816afb25a894ad18b09038ef6576b05cc6ba7ae  ./queries/d1_item_trace.sql
 60c0199583d01451a6e5b78093707e3dcd0948df  ./queries/o0_prepare.sql
 dbc1467e26cd910c16ca620d5e300fdfb2cb2b50  ./queries/or1_rdxset.sql
 023180d63c5cda8268d4bce7269ce661c14089e2  ./queries/or2_card.sql
