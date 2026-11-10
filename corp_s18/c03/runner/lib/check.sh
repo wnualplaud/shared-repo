@@ -1,16 +1,21 @@
 run_check() {
-    local nn="$1"; shift
-    local f
-    f=$(ls checks/"$nn"_*.sql 2>/dev/null | head -1) || true
-    [ -n "$f" ] || die "no checks/${nn}_*.sql"
+    local code="$1"; shift
+    local f files=()
+    for f in checks/"$code"*.sql; do [ -e "$f" ] && files+=("$f"); done
+    [ ${#files[@]} -gt 0 ] || die "no checks/${code}*.sql"
     dates "$@"
-    start_log "check_$(basename "$f" .sql)"
+    start_log "check_$code"
 
-    if sed 's/--.*//' "$f" | grep -Eiq '\b(create|insert|drop|alter|truncate|delete|update|msck|load)\b'; then
-        die "$f has a write statement; checks are read only"
-    fi
+    for f in "${files[@]}"; do
+        if sed 's/--.*//' "$f" | grep -Eiq '\b(create|insert|drop|alter|truncate|delete|update|msck|load)\b'; then
+            die "$f has a write statement; checks are read only"
+        fi
+    done
 
-    say "check $f; created $FROM..$TO; snapshot $SNAP_DT"
-    bl -f "$f" "${HV[@]}" --hivevar from_dt="$FROM" --hivevar to_dt="$TO" \
-        || die "check failed (see $LOG)"
+    for f in "${files[@]}"; do
+        say "==== $(basename "$f" .sql); created $FROM..$TO; snapshot $DL_DATA_DT"
+        sed -n '1,/^$/p' "$f" | tee -a "$LOG"
+        bl -f "$f" "${HV[@]}" --hivevar from_dt="$FROM" --hivevar to_dt="$TO" \
+            || die "check $f failed (see $LOG)"
+    done
 }

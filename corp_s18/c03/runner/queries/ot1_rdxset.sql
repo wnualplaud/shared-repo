@@ -1,7 +1,7 @@
 SELECT
 
-        REPLACE(ITEM.COLL_SPC_CREATE_DT, '-', '')                                AS `TM_KEY`
-    ,   CAST(CAST(RDXCUST.RDXCUST_NO AS BIGINT) AS STRING)                               AS `RDXCUST_NO`
+        REPLACE(SUBSTR(CAST(ITEM.CREATE_DATE AS STRING), 1, 10), '-', '')        AS `TM_KEY`
+    ,   CAST(CAST(CARD.RDXCUST_NO AS BIGINT) AS STRING)                             AS `RDXCUST_NO`
     ,   ITEM.PRODUCT_DESC                                                        AS `PRODUCT_DESC`
     ,   CAST(ITEM.TOTAL_AMOUNT AS DECIMAL(20, 2))                                AS `VALUE`
     ,   CAST(ITEM.UNIT_AMOUNT  AS DECIMAL(20, 4))                                AS `QTY`
@@ -23,13 +23,40 @@ SELECT
     ,   ITEM.RDXBANK_GRP_CODE                                                        AS `SRC_RDXBANK_GRP_CODE`
 
     ,   CURRENT_TIMESTAMP()                                                      AS `DL_LOAD_TS`
-    ,   RDXCUST.LINE                                                                 AS `LINE`
-    ,   RDXCUST.LINK_T_CODE                                                          AS `LINK_T_CODE`
+    ,   'ot1'                                                                    AS `LINE`
+    ,   RDXSET_T.RDXSRCT_CODE                                                           AS `LINK_T_CODE`
 
-    ,   ITEM.COLL_SPC_CREATE_DT                                                  AS `DL_DATA_DT`
+    ,   SUBSTR(CAST(ITEM.CREATE_DATE AS STRING), 1, 10)                          AS `DL_DATA_DT`
 
 FROM `${hivevar:tmp_db}`.`${hivevar:prefix}STOCK_ITEM` ITEM
 
-    INNER JOIN `${hivevar:tmp_db}`.`${hivevar:prefix}R_RDXCUST` RDXCUST
-        ON RDXCUST.RDXSRC_CODE = ITEM.RDXSRC_CODE
-       AND RDXCUST.CMS_COLL_ID = ITEM.CMS_COLL_ID
+    INNER JOIN `${hivevar:tmp_db}`.`${hivevar:prefix}RDXSET_T` RDXSET_T
+        ON ITEM.RDXSRC_CODE = RDXSET_T.RDXSRCT_CODE
+       AND ITEM.CMS_COLL_ID = RDXSET_T.COLL
+
+    INNER JOIN (
+
+        SELECT DISTINCT
+
+                TRIM(RDXSRCT_CODE)                                 AS RDXSRCT_CODE
+            ,   RDXSET_ID                                         AS RDXSET_ID
+            ,   TRIM(CAST(COLL_ID AS STRING))                   AS COLL_ID
+            ,   TRIM(RDXCUST_NO)                                    AS RDXCUST_NO
+
+        FROM `${hivevar:environment}_PERSIST_RDXSRC_DB`.RDXSRC_TBL_RDXSRC_RDXSET_IMP_SPC_CARD
+
+        WHERE DL_DATA_DT = '${hivevar:dl_data_dt}'
+
+          AND COLL_ID IS NOT NULL
+          AND TRIM(COLL_ID) <> ''
+          AND LOWER(TRIM(COLL_ID)) <> 'null'
+
+          AND RDXCUST_NO IS NOT NULL
+          AND TRIM(RDXCUST_NO) <> ''
+          AND LOWER(TRIM(RDXCUST_NO)) <> 'null'
+
+    ) CARD
+        ON RDXSET_T.RDXSRCT_CODE = CARD.RDXSRCT_CODE
+       AND RDXSET_T.RDXSET_ID = CARD.RDXSET_ID
+       AND RDXSET_T.COLL = CARD.COLL_ID
+       AND RDXSET_T.CUST_RDXCUST = CARD.RDXCUST_NO

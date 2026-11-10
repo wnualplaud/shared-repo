@@ -1,7 +1,7 @@
 SELECT
 
-        REPLACE(ITEM.COLL_SPC_CREATE_DT, '-', '')                                AS `TM_KEY`
-    ,   CAST(CAST(RDXCUST.RDXCUST_NO AS BIGINT) AS STRING)                               AS `RDXCUST_NO`
+        REPLACE(SUBSTR(CAST(ITEM.CREATE_DATE AS STRING), 1, 10), '-', '')        AS `TM_KEY`
+    ,   CAST(CAST(CARD.RDXCUST_NO AS BIGINT) AS STRING)                              AS `RDXCUST_NO`
     ,   ITEM.PRODUCT_DESC                                                        AS `PRODUCT_DESC`
     ,   CAST(ITEM.TOTAL_AMOUNT AS DECIMAL(20, 2))                                AS `VALUE`
     ,   CAST(ITEM.UNIT_AMOUNT  AS DECIMAL(20, 4))                                AS `QTY`
@@ -23,13 +23,13 @@ SELECT
     ,   ITEM.RDXBANK_GRP_CODE                                                        AS `SRC_RDXBANK_GRP_CODE`
 
     ,   CURRENT_TIMESTAMP()                                                      AS `DL_LOAD_TS`
-    ,   RDXCUST.LINE                                                                 AS `LINE`
-    ,   RDXCUST.LINK_T_CODE                                                          AS `LINK_T_CODE`
+    ,   'o0'                                                                     AS `LINE`
+    ,   CARD.RDXSRC_CODE                                                            AS `LINK_T_CODE`
 
-    ,   ITEM.COLL_SPC_CREATE_DT                                                  AS `DL_DATA_DT`
+    ,   SUBSTR(CAST(ITEM.CREATE_DATE AS STRING), 1, 10)                          AS `DL_DATA_DT`
 
 FROM `${hivevar:tmp_db}`.`${hivevar:prefix}STOCK_ITEM` ITEM
 
-    INNER JOIN `${hivevar:tmp_db}`.`${hivevar:prefix}R_CARD_RDXCUST` RDXCUST
-        ON RDXCUST.RDXSRC_CODE = ITEM.RDXSRC_CODE
-       AND RDXCUST.CMS_COLL_ID = ITEM.CMS_COLL_ID
+    INNER JOIN `${hivevar:tmp_db}`.`${hivevar:prefix}CARD` CARD
+        ON ITEM.RDXSRC_CODE = CARD.RDXSRC_CODE
+       AND ITEM.CMS_COLL_ID = CARD.CMS_COLL_ID

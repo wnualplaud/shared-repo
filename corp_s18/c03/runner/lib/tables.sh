@@ -12,7 +12,7 @@ run_tables() {
     start_log tables
     local refs outs db t used list kind miss=0
     refs=$(table_refs)
-    outs=$(for c in jobs/*.conf; do ( OUT=""; . "$c"; echo "$TMP_DB.$OUT $(basename "$c" .conf)" ); done)
+    outs=$(for c in jobs/*.conf; do ( OUT=""; . "$c"; echo "$TMP_DB.$PREFIX$OUT $(basename "$c" .conf)" ); done)
 
     say "sources: what queries/*.sql read (snapshot partitions not checked)"
     say "temp: what jobs/*.conf make in $TMP_DB"

@@ -5,21 +5,21 @@ load_env() {
     local f="env/$1.env" v
     [ -f "$f" ] || die "no $f (copy env/example.env to $f and fill it)"
     . "$f"
-    for v in BEELINE_ARGS ENV DBDWENV SNAP_DT FROM_DT TO_DT TMP_DB PREFIX; do
+    for v in BEELINE_ARGS ENV DBDWENV DL_DATA_DT FROM_DT TO_DT TMP_DB PREFIX; do
         [ -n "${!v:-}" ] || die "$f: $v is empty"
     done
     [[ "${TMP_DB,,}" == *_tmp_db ]] || die "$f: TMP_DB must be a *_tmp_db database (is $TMP_DB)"
     if [ -n "${HIVE_INIT:-}" ] && [ ! -r "$HIVE_INIT" ]; then die "HIVE_INIT not readable: $HIVE_INIT"; fi
 
     eval "BL_BASE=($BEELINE_ARGS)"
-    HV=(--hivevar environment="$ENV" --hivevar env="$ENV" --hivevar dbdwenv="$DBDWENV" --hivevar snap_dt="$SNAP_DT"
+    HV=(--hivevar environment="$ENV" --hivevar env="$ENV" --hivevar dbdwenv="$DBDWENV" --hivevar dl_data_dt="$DL_DATA_DT"
         --hivevar tmp_db="$TMP_DB" --hivevar prefix="$PREFIX")
     LOG_DIR="logs/$1"; mkdir -p "$LOG_DIR"
 }
 
 resolve() {
     sed -e "s|\${hivevar:environment}|$ENV|g; s|\${hivevar:env}|$ENV|g; s|\${hivevar:dbdwenv}|$DBDWENV|g" \
-        -e "s|\${hivevar:snap_dt}|$SNAP_DT|g; s|\${hivevar:tmp_db}|$TMP_DB|g; s|\${hivevar:prefix}|$PREFIX|g" \
+        -e "s|\${hivevar:dl_data_dt}|$DL_DATA_DT|g; s|\${hivevar:tmp_db}|$TMP_DB|g; s|\${hivevar:prefix}|$PREFIX|g" \
         -e "s|\${hivevar:from_dt}|${FROM:-$FROM_DT}|g; s|\${hivevar:to_dt}|${TO:-$TO_DT}|g" "$@"
 }
 
@@ -66,7 +66,7 @@ list_all() {
     for c in jobs/*.conf; do
         [ -e "$c" ] || continue
         ( DESC=""; OUT=""; NEEDS=""; . "$c"
-          printf '  %-24s -> %-22s needs: %-20s %s\n' "$(basename "$c" .conf)" "$OUT" "${NEEDS:--}" "$DESC" )
+          printf '  %-24s -> %-26s needs: %-20s %s\n' "$(basename "$c" .conf)" "<prefix>$OUT" "${NEEDS:--}" "$DESC" )
     done
     echo "checks (checks/*.sql):"
     for c in checks/*.sql;  do [ -e "$c" ] && echo "  $(basename "$c" .sql)"; done

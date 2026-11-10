@@ -7,7 +7,7 @@
 #   ./run.sh <env> job <name> [--from D] [--to D] [--dry-run]
 #                                                jobs/<name>.conf -> ${TMP_DB}.<OUT>; --dry-run: show the SQL, run nothing
 #   ./run.sh <env> summary <table>               rows, days, Y / N, keys filled, of ${TMP_DB}.<table>
-#   ./run.sh <env> check <nn> [--from D] [--to D]  checks/<nn>_*.sql, read only, result to screen + log
+#   ./run.sh <env> check <code> [--from D] [--to D]  checks/<code>*.sql (v101 one, v1 a set, v all), read only
 #   ./run.sh <env> cleanup <file>                drop the tables listed in <file>, one by one, each confirmed
 #
 #   <env>   env/<env>.env (uat, prod ...); copy env/example.env.

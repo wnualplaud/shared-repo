@@ -4,13 +4,12 @@
 # Lines starting with # are skipped. Only tables in TMP_DB are touched.
 # Replace <env>; uncomment what to drop.
 
-# <env>_outbound_tmp_db.C03_OUT_R_CARD
-# <env>_outbound_tmp_db.C03_OUT_U
-# <env>_outbound_tmp_db.C03_OUT_R
-# <env>_outbound_tmp_db.C03_R_CARD_RDXCUST
-# <env>_outbound_tmp_db.C03_OUT_T
-# <env>_outbound_tmp_db.C03_OUT_CARD
-# <env>_outbound_tmp_db.C03_R_RDXCUST
-# <env>_outbound_tmp_db.C03_T_RDXCUST
-# <env>_outbound_tmp_db.C03_CARD_RDXCUST
-# <env>_outbound_tmp_db.C03_STOCK_ITEM
+# <env>_outbound_tmp_db.CHK_OUT_OR2
+# <env>_outbound_tmp_db.CHK_OUT_OR1
+# <env>_outbound_tmp_db.CHK_OUT_OT2
+# <env>_outbound_tmp_db.CHK_OUT_OT1
+# <env>_outbound_tmp_db.CHK_OUT_O0
+# <env>_outbound_tmp_db.CHK_RDXSET_R
+# <env>_outbound_tmp_db.CHK_RDXSET_T
+# <env>_outbound_tmp_db.CHK_CARD
+# <env>_outbound_tmp_db.CHK_STOCK_ITEM

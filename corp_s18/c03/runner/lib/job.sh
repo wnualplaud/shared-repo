@@ -4,15 +4,17 @@ run_job() {
     [ -f "$conf" ] || die "no $conf"
     local DESC="" QUERY="" OUT="" NEEDS="" SETTINGS=""
     . "$conf"
+    OUT="${PREFIX}${OUT}"
+    NEEDS=$(for t in $NEEDS; do printf '%s ' "${PREFIX}${t}"; done)
     dates "$@"
     start_log "job_$name"
 
     [ -n "$QUERY" ] && [ -f "queries/$QUERY" ] || die "$conf: QUERY=queries/$QUERY not found"
-    [ -n "$OUT" ] || die "$conf: OUT is empty"
+    [ "$OUT" != "$PREFIX" ] || die "$conf: OUT is empty"
     guard_name "$OUT"
 
     say "job $name: $DESC"
-    say "query queries/$QUERY -> $TMP_DB.$OUT; created $FROM..$TO; snapshot $SNAP_DT"
+    say "query queries/$QUERY -> $TMP_DB.$OUT; created $FROM..$TO; snapshot $DL_DATA_DT"
 
     if [ -n "$DRY" ]; then
         say "dry run: no beeline; NEEDS ($NEEDS) and whether $OUT exists are not checked"
