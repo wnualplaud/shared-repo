@@ -18,7 +18,6 @@ bare table names:
 - suffix in backticks: `_rdx_tbl1`, `_rdx_tbl2`
 - file names: rdx_tbl2.table.json rdx_tbl1.items.json rdx_tbl3.insert.sql
 - bash array: TABLES=(rdx_tbl2 rdx_tbl1)
-- upper case: RDX_TBL3.sql RDX_TBL1.sql RDX_TBL2.sql
 
 organisation and prefix:
 - bucket: s3://rdxorg-rdx-uat-share/yourdata-api-mock/iceberg

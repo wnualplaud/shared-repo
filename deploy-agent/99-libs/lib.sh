@@ -22,9 +22,10 @@ load_env() {  # env file
     REGISTRY="$ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com"
 }
 
-run_dir() {  # -> a folder for this run's evidence, outside git (deliverables/local/runs/<stamp>)
-    local d
-    d="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)/local/runs/$(date +%Y%m%d-%H%M%S)-$1"
+run_dir() {  # -> a folder for this run's evidence: $RUNS_DIR/<stamp>, else deliverables/local/runs/<stamp>
+    local d base
+    base="${RUNS_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)/local/runs}"
+    d="$base/$(date +%Y%m%d-%H%M%S)-$1"
     mkdir -p "$d"; echo "$d"
 }
 

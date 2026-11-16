@@ -1,15 +1,28 @@
 # Deploy Runbook (UAT)
 
-`<env>` is `../local/uat.env` on Git Bash; on CloudShell, the copy you
-uploaded. `<tag>` is new each time: `api-YYYYMMDD-NN`.
+`<env>` is the env file: on Git Bash, wherever you keep it (on the corp
+machine `corp_s16_local/uat.env`, outside the restored copy); on
+CloudShell, the copy that came in the pack. `<tag>` is new each time:
+`api-YYYYMMDD-NN`. Git Bash steps run from the restored copy's root
+(`repo/` and `deploy-agent/` side by side).
 
 ## 0. Prepare (by hand)
 
-1. `../local/uat.env` filled from `0-prepare/uat.env.example`.
-2. Git Bash: `aws sso login --profile <AWS_PROFILE>`.
+1. The env file filled from `0-prepare/uat.env.example`.
+2. Git Bash: `aws sso login --profile <AWS_PROFILE>`; optionally
+   `export RUNS_DIR=<a folder outside the restored copy>` so run evidence
+   goes there (default: `local/runs/` beside `deploy-agent/`).
 3. Pick the tag, e.g. `api-20261027-01`.
-4. CloudShell: upload `deploy-agent/` (with `99-libs/`), the env file and
-   `repo/` (zip, then unzip).
+4. Git Bash: pack for the two CloudShells, into a new folder outside the
+   restored copy:
+
+   ```bash
+   bash deploy-agent/0-prepare/pack.sh <env> <out-dir>
+   ```
+
+   `build.tar.gz` (repo, kit, env; LF line ends) is for step 2;
+   `smoke-paste.txt` is for step 4b.
+5. CloudShell: upload `build.tar.gz`, then `tar xzf build.tar.gz`.
 
 ## 1. Preflight (Git Bash, reads)
 
@@ -65,8 +78,11 @@ the vendor.
 
 ## 4b. Verify inside (CloudShell VPC environment, reads)
 
+This environment takes no uploads: open `smoke-paste.txt` from step 0,
+copy all of it, paste. It writes `~/s16-smoke/` and runs
+
 ```bash
-CLOUDSHELL=1 bash 4b-verify-inside/smoke.sh <env>
+CLOUDSHELL=1 bash ~/s16-smoke/4b-verify-inside/smoke.sh ~/s16-smoke/<env file name>
 ```
 
 Look at: `/health 200`; no 5xx and no `000` (no answer). 4xx can be the
