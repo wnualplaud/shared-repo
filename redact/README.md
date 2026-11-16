@@ -8,9 +8,13 @@ private and is not in this repository. The file format is in the
 docstring of `redact.py`.
 
 ```sh
-python redact.py check   <rules.py> <dir>   # list real names still present
-python redact.py redact  <rules.py> <dir>   # real -> sample
-python redact.py restore <rules.py> <dir>   # sample -> real
+python redact.py redact  <rules.py> <src> <dst>   # copy src to dst, real -> sample in dst
+python redact.py restore <rules.py> <src> <dst>   # copy src to dst, sample -> real in dst
+python redact.py check   <rules.py> <dir>         # list real names still present
+
+<src> is never changed; <dst> must not exist yet (`.git`, `__pycache__`
+are not copied). The in-place form `redact|restore <rules.py> <dir>`
+still works.
 ```
 
 Notes:

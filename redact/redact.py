@@ -3,9 +3,13 @@
 The engine holds no names; every name lives in the rules file, which stays
 private. Only this engine may be shared.
 
-    python redact.py redact  <rules.py> <dir>   # real -> sample names (content and file names)
-    python redact.py restore <rules.py> <dir>   # sample -> real
-    python redact.py check   <rules.py> <dir>   # exit 1 if any real name is left
+    python redact.py redact  <rules.py> <src> <dst>   # copy src to dst, then real -> sample in dst
+    python redact.py restore <rules.py> <src> <dst>   # copy src to dst, then sample -> real in dst
+    python redact.py check   <rules.py> <dir>         # exit 1 if any real name is left
+
+<src> is never changed. <dst> must not exist yet; `.git` and `__pycache__`
+are not copied. (The older in-place form, `redact|restore <rules.py> <dir>`,
+still works.)
 
 A rules file is a Python file that defines:
 
@@ -21,6 +25,7 @@ Files are written with LF line ends whatever the platform.
 """
 import importlib.util
 import re
+import shutil
 import sys
 from pathlib import Path
 
@@ -108,16 +113,31 @@ def check(rules, root: Path) -> int:
     return 1 if hits else 0
 
 
+def copy_to(src: Path, dst: Path) -> Path:
+    if not src.is_dir():
+        sys.exit(f"source is not a folder: {src}")
+    if dst.exists():
+        sys.exit(f"destination already exists, refusing to write into it: {dst}")
+    shutil.copytree(src, dst, ignore=shutil.ignore_patterns(".git", "__pycache__"))
+    print(f"  copied {src} -> {dst}")
+    return dst
+
+
 def main():
-    if len(sys.argv) != 4 or sys.argv[1] not in {"redact", "restore", "check"}:
+    args = sys.argv[1:]
+    mode = args[0] if args else None
+    ok = (mode == "check" and len(args) == 3) or (mode in {"redact", "restore"} and len(args) in {3, 4})
+    if not ok:
         sys.exit(__doc__)
-    mode, rules, root = sys.argv[1], load_rules(Path(sys.argv[2])), Path(sys.argv[3])
+    rules, root = load_rules(Path(args[1])), Path(args[2])
     if mode == "check":
         sys.exit(check(rules, root))
-    if mode == "redact":
+    if mode == "redact":   # checked on the source, before anything is written
         clash = [str(p) for p in text_files(root) if rules.ANCHOR in p.read_text(encoding="utf-8")]
         if clash:
             sys.exit(f"anchor '{rules.ANCHOR}' already present, refusing to redact: {clash}")
+    if len(args) == 4:
+        root = copy_to(root, Path(args[3]))
     rewrite(rules, root, forward=(mode == "redact"))
 
 
