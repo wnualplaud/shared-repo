@@ -1,0 +1,21 @@
+{
+  "table": "rdx_tbl1",
+  "store": "dynamodb",
+  "source": "refs/dynamo/RDX_TBL1.sql",
+  "key": ["citizenId", "accountKey"],
+  "columns": [
+    {"name": "institutionName", "type": "string", "mandatory": "M"},
+    {"name": "citizenId", "type": "string", "mandatory": "M"},
+    {"name": "accountKey", "type": "string", "mandatory": "M"},
+    {"name": "accountId", "type": "string", "mandatory": "M"},
+    {"name": "accountSubType", "type": "string", "mandatory": "M"},
+    {"name": "accountStatus", "type": "string", "mandatory": "M"},
+    {"name": "accountName", "type": "string", "mandatory": "M"},
+    {"name": "accountNameEn", "type": "string", "mandatory": "O"},
+    {"name": "ownerType", "type": "string", "mandatory": "M"},
+    {"name": "accountOwner", "type": "string", "mandatory": "M"},
+    {"name": "src_stm_id", "type": "string", "mandatory": "M"},
+    {"name": "load_ts", "type": "string", "format": "date-time", "mandatory": "M"},
+    {"name": "data_dt", "type": "string", "format": "date", "mandatory": "M"}
+  ]
+}

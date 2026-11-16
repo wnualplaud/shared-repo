@@ -1,0 +1,26 @@
+{
+    "TableName": "rdx${ENV}_tbl1",
+    "AttributeDefinitions": [
+        {
+            "AttributeName": "citizenId",
+            "AttributeType": "S"
+        },
+        {
+            "AttributeName": "accountKey",
+            "AttributeType": "S"
+        }
+    ],
+    
+    "KeySchema": [
+        {
+            "AttributeName": "citizenId",
+            "KeyType": "HASH"
+        },
+        {
+            "AttributeName": "accountKey",
+            "KeyType": "RANGE"
+        }
+    ],
+    
+    "BillingMode": "PAY_PER_REQUEST"
+}

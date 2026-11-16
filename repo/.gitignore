@@ -1,0 +1,19 @@
+# env
+*.env
+
+# py
+.venv/
+__pycache__/
+*.py[cod]
+
+# ide
+.vscode
+.vscode/
+
+# local scratch
+manual-stash/
+staging/
+REFS/
+
+# misc
+*:Zone.Identifier

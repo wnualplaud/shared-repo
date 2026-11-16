@@ -1,0 +1,26 @@
+{
+    "TableName": "rdx${ENV}_tbl2",
+    "AttributeDefinitions": [
+        {
+            "AttributeName": "accountId",
+            "AttributeType": "S"
+        },
+        {
+            "AttributeName": "accountSubType",
+            "AttributeType": "S"
+        }
+    ],
+    
+    "KeySchema": [
+        {
+            "AttributeName": "accountId",
+            "KeyType": "HASH"
+        },
+        {
+            "AttributeName": "accountSubType",
+            "KeyType": "RANGE"
+        }
+    ],
+    
+    "BillingMode": "PAY_PER_REQUEST"
+}
